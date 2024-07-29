@@ -1,6 +1,4 @@
-# React-Hooks
-
-## State Hooks
+# State Hooks
 State lets a component “remember” information like user input. For example, a form component can use state to store the input value, while an image gallery component can use state to store the selected image index.
 
 To add state to a component, use one of these Hooks:
@@ -8,13 +6,13 @@ To add state to a component, use one of these Hooks:
 - useState declares a state variable that you can update directly.
 - useReducer declares a state variable with the update logic inside a reducer function.
 
-### useState
+## useState
 useState is a React Hook that lets you add a state variable to your component.
 ```typescript
 const [state, setState] = useState(initialState)
 ```
 
-#### Basic use case
+### Basic use case
 ```typescript
 import { useState } from 'react';
 
@@ -34,7 +32,7 @@ export default function Counter() {
 ```
 ![image](https://github.com/user-attachments/assets/abfc570c-5fe4-4696-989c-8075fa9dde7d)
 
-#### Updating objects and arrays in state 
+### Updating objects and arrays in state 
 ```typescript
 import { useState } from 'react';
 import AddTodo from './AddTodo.js';
@@ -93,7 +91,7 @@ export default function TaskApp() {
 ```
 ![image](https://github.com/user-attachments/assets/bf7af98e-3eec-470e-a2c5-1eadf1e35d94)
 
-#### Updating state based on the previous state 
+### Updating state based on the previous state 
 Wrong:
 ```typescript
 function handleClick() {
@@ -114,7 +112,7 @@ When you use setAge(age + 1), you are directly using the current value of age fr
 
 When you use setAge(prevAge => prevAge + 1), you are using the functional form of the state updater function. This form takes the previous state value (prevAge) as an argument and returns the new state value. This ensures that each state update is based on the most recent state, even if multiple updates are queued.
 
-#### Avoiding recreating the initial state 
+### Avoiding recreating the initial state 
 Bad Practice:
 ```typescript
 function TodoList() {
@@ -131,18 +129,18 @@ Although the result of createInitialTodos() is only used for the initial render,
 
 To solve this, you may pass it as an initializer function to useState instead. Notice that you’re passing createInitialTodos, which is the function itself, and not createInitialTodos(), which is the result of calling it. If you pass a function to useState, React will only call it during initialization.
 
-## Effect Hooks
+# Effect Hooks
 Effects let a component connect to and synchronize with external systems. This includes dealing with network, browser DOM, animations, widgets written using a different UI library, and other non-React code.
 - useEffect connects a component to an external system.
 - useLayoutEffect fires before the browser repaints the screen. You can measure layout here.
 - useInsertionEffect fires before React makes changes to the DOM. Libraries can insert dynamic CSS here.
 
-### useEffect
+## useEffect
 useEffect is a React Hook that lets you synchronize a component with an external system.
 ```typescript
 useEffect(setup, dependencies?)
 ```
-#### Fetching data with Effects 
+### Fetching data with Effects 
 ```typescript
 import { useState, useEffect } from 'react';
 import { fetchBio } from './api.js';
@@ -183,7 +181,7 @@ export default function Page() {
 ```
 ![image](https://github.com/user-attachments/assets/8542f0a7-5e79-422b-8f5a-813046ff52ec)
 
-#### Passing Reactive Dependencies
+### Passing Reactive Dependencies
 1. Passing a dependency array
 ```typescript
 useEffect(() => {
@@ -208,18 +206,18 @@ useEffect(() => {
 ```
 If you pass no dependency array at all, your Effect runs after every single render (and re-render) of your component.
 
-## Context Hooks 
+# Context Hooks 
 Context lets a component receive information from distant parents without passing it as props. For example, your app’s top-level component can pass the current UI theme to all components below, no matter how deep.
 
 - useContext reads and subscribes to a context.
 
-### useContext
+## useContext
 useContext is a React Hook that lets you read and subscribe to context from your component.
 ```typescript
 const value = useContext(SomeContext)
 ```
 
-#### Passing data deeply into the tree 
+### Passing data deeply into the tree 
 Call useContext at the top level of your component to read and subscribe to context.
 
 useContext returns the context value for the context you passed. To determine the context value, React searches the component tree and finds the closest context provider above for that particular context.
