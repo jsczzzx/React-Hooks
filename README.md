@@ -136,3 +136,70 @@ useEffect is a React Hook that lets you synchronize a component with an external
 ```typescript
 useEffect(setup, dependencies?)
 ```
+#### Fetching data with Effects 
+```typescript
+import { useState, useEffect } from 'react';
+import { fetchBio } from './api.js';
+
+export default function Page() {
+  const [person, setPerson] = useState('Alice');
+  const [bio, setBio] = useState(null);
+  useEffect(() => {
+    async function startFetching() {
+      setBio(null);
+      const result = await fetchBio(person);
+      if (!ignore) {
+        setBio(result);
+      }
+    }
+
+    let ignore = false;
+    startFetching();
+    return () => {
+      ignore = true;
+    }
+  }, [person]);
+
+  return (
+    <>
+      <select value={person} onChange={e => {
+        setPerson(e.target.value);
+      }}>
+        <option value="Alice">Alice</option>
+        <option value="Bob">Bob</option>
+        <option value="Taylor">Taylor</option>
+      </select>
+      <hr />
+      <p><i>{bio ?? 'Loading...'}</i></p>
+    </>
+  );
+}
+```
+![image](https://github.com/user-attachments/assets/8542f0a7-5e79-422b-8f5a-813046ff52ec)
+
+#### Passing Reactive Dependencies
+- Passing a dependency array
+```typescript
+useEffect(() => {
+  // ...
+}, [a, b]); // Runs again if a or b are different
+```
+If you specify the dependencies, your Effect runs after the initial render and after re-renders with changed dependencies.
+
+- Passing an Empty dependency array
+```typescript
+useEffect(() => {
+  // ...
+}, []); // Does not run again (except once in development)
+```
+If your Effect truly doesn’t use any reactive values, it will only run after the initial render.
+
+- Passing no dependency array
+```typescript
+useEffect(() => {
+  // ...
+}); // Always runs again
+```
+If you pass no dependency array at all, your Effect runs after every single render (and re-render) of your component.
+
+
